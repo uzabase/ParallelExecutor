@@ -1,8 +1,10 @@
 import io.kotlintest.specs.StringSpec
 import io.kotlintest.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class ParallelExecutorTest : StringSpec() {
