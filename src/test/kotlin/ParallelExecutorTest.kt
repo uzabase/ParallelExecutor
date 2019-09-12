@@ -1,3 +1,4 @@
+import io.kotlintest.matchers.collections.shouldContainAll
 import io.kotlintest.specs.StringSpec
 import io.kotlintest.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -9,7 +10,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class ParallelExecutorTest : StringSpec() {
     init {
-        "正しく呼ばれることの確認"{
+        "Operation check"{
             val target = ParallelExecutor(1)
             fun doTest(input: TestInput) = TestOutput(input.key, "${input.value} out")
             val key1 = "key1"
@@ -24,13 +25,13 @@ class ParallelExecutorTest : StringSpec() {
                 items.add(item)
             }
 
-            items shouldBe mutableListOf(
+            items shouldContainAll  mutableListOf(
                 Result.success(TestOutput(key1, "$value1 out")),
                 Result.success(TestOutput(key2, "$value2 out"))
             )
         }
 
-        "sizeが0のseqを受け取るとcloseチャネルが返る"{
+        "if sequens size = 0 , return closed channel"{
             fun doTest(s: String) = "out $s"
             val target = ParallelExecutor(1)
             val inputSeq = emptySequence<String>()
