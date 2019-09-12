@@ -35,10 +35,10 @@ class ParallelExecutor(private val capacity: Int) {
             channel.close()
         }
         job = GlobalScope.launch(handler) {
-            // errorの場合は例外をthrowしてチャネルを閉じる
+            // close channel and throw exception, if error an occur
             inputSeq.forEach { input ->
                 launch {
-                    // jobがキャンセルされない限り実行する
+                    // execute unless job is canceled
                     if (isActive) {
                         semaphore.send(Unit)
                         withContext(dispatcher) {
@@ -46,11 +46,11 @@ class ParallelExecutor(private val capacity: Int) {
                                 callFunction(input)
                             }
                         }.let { result ->
-                            // error内容も含めてresultで返す
+                            // send result including an error
                             resultCh.send(result)
                             semaphore.receive()
-                            // errorの場合は例外をthrowしてチャネルを閉じる
                             result.onFailure {
+                                // close channel and throw exception
                                 throw it
                             }
                         }
