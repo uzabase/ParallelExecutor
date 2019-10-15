@@ -7,7 +7,7 @@
 ### Using it
 ```
 dependencies {
-    implementation "parallel-executor:parallel-executor:1.0"
+    // later ..
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:kotlinx_version"
 }
 ```
