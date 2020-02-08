@@ -7,7 +7,7 @@
 ### Using it
 ```
 dependencies {
-    // later ..
+    implementation "com.uzabase:pararell-executor:1.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:kotlinx_version"
 }
 ```
